@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-const int MAX = 6;
+const int T = 6;
 
 using namespace std;
 
@@ -11,9 +11,10 @@ int solution(int cacheSize, vector<string> cities) {
     int answer = 0;
     int len = cities.size();
 
+    // 캐시사이즈가 0이면 모두 cache miss다.
     if (cacheSize == 0) return 5 * len;
-    vector<string> cache;
 
+    vector<string> cache;
     for (auto i : cities) {
         // 도시이름들을 모두 소문자로 변환
         transform(i.begin(), i.end(), i.begin(), ::tolower);
@@ -31,9 +32,10 @@ int solution(int cacheSize, vector<string> cities) {
         else {
             // 캐시에 남은 공간이 없다면 찾은 원소를 제거한다.
             if (free == 0) cache.erase(it);
-            cache.push_back(i);
             answer++;
         }
+        // 캐시에 도시이름을 push..
+        cache.push_back(i);
     }
 
     return answer;
@@ -41,7 +43,7 @@ int solution(int cacheSize, vector<string> cities) {
 
 int main(void)
 {
-    vector<string> cities[MAX] = {
+    vector<string> cities[T] = {
         { "Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA" },
         { "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul" },
         { "Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome" },
@@ -49,7 +51,7 @@ int main(void)
         { "Jeju", "Pangyo", "NewYork", "newyork" },
         { "Jeju", "Pangyo", "Seoul", "NewYork", "LA" }
     };
-    pair<int, vector<string>> testCase[MAX] = {
+    pair<int, vector<string>> testCase[T] = {
         { 3, cities[0] },
         { 3, cities[1] },
         { 2, cities[2] },
@@ -58,7 +60,7 @@ int main(void)
         { 0, cities[5] }
     };
 
-    for (int i = 0; i < MAX; i++) {
+    for (int i = 0; i < T; i++) {
         cout << solution(testCase[i].first, testCase[i].second) << endl;
     }
 
